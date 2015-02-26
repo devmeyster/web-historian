@@ -1,4 +1,4 @@
- var fs = require('fs');
+var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
 
@@ -58,7 +58,9 @@ exports.addUrlToList = function(link){
   })
 };
 
-exports.isURLArchived = function(){
+exports.isURLArchived = function(file){
+  console.log("inside isURLArchive= "+file);
+  return fs.existsSync(file);
 };
 
 exports.downloadUrls = function(){

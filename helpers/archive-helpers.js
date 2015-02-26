@@ -1,4 +1,4 @@
-var fs = require('fs');
+ var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
 
@@ -26,9 +26,20 @@ exports.initialize = function(pathsObj){
 // modularize your code. Keep it clean!
 
 exports.readListOfUrls = function(){
+  var content;
+  //fs.readFile("../web/archives/sites/sites.txt", function(err, data){
+  return fs.readFile("./../web/archives/sites.txt", completedReading);
 };
 
-exports.isUrlInList = function(){
+var completedReading = function (err, data){
+  if (err){
+      console.log(err);
+    }
+  //console.log((data+"").split('\n'));
+  return (data+"").split('\n');
+}
+exports.isUrlInList = function(data){
+
 };
 
 exports.addUrlToList = function(){

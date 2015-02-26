@@ -2,6 +2,7 @@ var path = require('path');
 var urlLib = require('url');
 var archive = require('../helpers/archive-helpers');
 var helper= require('./http-helpers.js');
+var fs = require('fs');
 // require more modules/folders here!
 
 var sendResponse = function(res, data, statusCode){
@@ -28,7 +29,15 @@ exports.handleRequest = function (req, res) {
     }
     else{
       console.log("in the else statement");
-      console.log(archive.readListOfUrls());
+      archive.readListOfUrls().on('data',function(data){
+        if(!archive.isUrlInList(data, url)){
+          archive.addUrlToList(url);
+        }
+
+          //redirect them to the loading.html
+          res.end();
+      });
+
       // sendResponse(res, 'What Web Site Would You Like ? <br><input type="text" name="fname"><br><input type="submit" value="Submit"></form>');
       //check the sites.txt file and display if it is found
       //if results is undefined show 404
@@ -37,7 +46,7 @@ exports.handleRequest = function (req, res) {
       // }else{
       //   //respond with 404 status
       // }
-      res.end();
+      //res.end();
     }
 
   }

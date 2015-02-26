@@ -26,23 +26,36 @@ exports.initialize = function(pathsObj){
 // modularize your code. Keep it clean!
 
 exports.readListOfUrls = function(){
-  var content;
-  //fs.readFile("../web/archives/sites/sites.txt", function(err, data){
-  return fs.readFile("./../web/archives/sites.txt", completedReading);
+  //var content;
+  // fs.readFile("./../web/archives/sites.txt", function(err, data){
+  //   if (err){
+  //     console.log(err);
+  //   }
+
+  //   content = ""+data;
+  //   content = content.split('\n');
+  //   console.log(content);
+
+    // return content;
+    return fs.createReadStream('./../web/archives/sites.txt');
+  //});
+
 };
 
-var completedReading = function (err, data){
-  if (err){
-      console.log(err);
-    }
-  //console.log((data+"").split('\n'));
-  return (data+"").split('\n');
-}
-exports.isUrlInList = function(data){
-
+exports.isUrlInList = function(data,link){
+  var content = ""+data;
+  content = content.split('\n');
+  console.log(content);
+  return _.some(content,function(el){
+    return el === link;
+  });
 };
 
-exports.addUrlToList = function(){
+exports.addUrlToList = function(link){
+  fs.appendFile('./../web/archives/sites.txt', link+'\n', function(err){
+    if(err) console.log(err);
+    console.log(link+" has been appended to sites.txt");
+  })
 };
 
 exports.isURLArchived = function(){

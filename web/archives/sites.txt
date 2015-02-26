@@ -1,2 +1,5 @@
-www.google.com
-www.notGoogle.com
+/www.google.com
+/www.notGoogle.com
+/www.msn.com
+/www.yahoo.com
+/favicon.ico

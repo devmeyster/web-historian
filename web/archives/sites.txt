@@ -1,3 +1,4 @@
 /www.google.com
-/favicon.ico
 /www.fb.com
+/www.newegg.com
+/www.facebook.com

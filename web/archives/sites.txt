@@ -2,3 +2,5 @@
 /www.fb.com
 /www.newegg.com
 /www.facebook.com
+/www.amazon.com
+/www.github.com

@@ -1,6 +1,8 @@
 var fs = require('fs');
 var path = require('path');
 var _ = require('underscore');
+var http = require("http");
+var https = require("https");
 
 /*
  * You will need to reuse the same paths many times over in the course of this sprint.
@@ -25,7 +27,8 @@ exports.initialize = function(pathsObj){
 // The following function names are provided to you to suggest how you might
 // modularize your code. Keep it clean!
 
-exports.readListOfUrls = function(){
+exports.readListOfUrls = function(path){
+  path = path || './../web/archives/sites.txt';
   //var content;
   // fs.readFile("./../web/archives/sites.txt", function(err, data){
   //   if (err){
@@ -37,7 +40,7 @@ exports.readListOfUrls = function(){
   //   console.log(content);
 
     // return content;
-    return fs.createReadStream('./../web/archives/sites.txt');
+    return fs.createReadStream(path);
   //});
 
 };
@@ -59,9 +62,32 @@ exports.addUrlToList = function(link){
 };
 
 exports.isURLArchived = function(file){
-  console.log("inside isURLArchive= "+file);
   return fs.existsSync(file);
 };
 
-exports.downloadUrls = function(){
+exports.downloadUrls = function(path, url){
+
+  console.log(path);
+  fs.mkdirSync(path);
+  // var file = fs.openSync(path+"/index.html", "w");
+  // fs.closeSync(file);
+
+  var file = fs.createWriteStream(path+"/index.html");
+  var urlHttps = 'https://'+url.slice(1);
+  var urlHttp = 'http://'+url.slice(1);
+
+  console.log(url);
+  // make http request
+  http.get(urlHttp, function(res) {
+      // pipe response into file
+      res.pipe(file);
+      // once done
+      file.on('finish', function(err) {
+          // close write stream
+        console.log(err)
+        file.close(function(err) {
+            console.log(err)
+          });
+      });
+    });
 };
